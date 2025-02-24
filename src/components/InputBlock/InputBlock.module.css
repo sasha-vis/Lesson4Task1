@@ -1,0 +1,25 @@
+.inputBlock {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.inputBlock label {
+	font-size: 14px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.inputBlock input {
+	padding: 5px 10px;
+	border: 1px solid #111;
+	border-radius: 5px;
+}
+
+.error {
+	font-size: 12px;
+	color: red;
+
+	min-height: 15px;
+}
