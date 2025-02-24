@@ -1,39 +1,24 @@
-import { useState } from 'react';
+import { formValidationSchema } from './../utils/validateField';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const initialState = {
-	email: {
-		value: '',
-		error: null,
-	},
-	password: {
-		value: '',
-		error: null,
-	},
-	passwordRpt: {
-		value: '',
-		error: null,
-	},
+	email: '',
+	password: '',
+	passwordRpt: '',
 };
 
 export const useStore = () => {
-	const [state, setState] = useState(initialState);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isValid },
+		reset,
+	} = useForm({
+		defaultValues: initialState,
+		resolver: yupResolver(formValidationSchema),
+		mode: 'all',
+	});
 
-	return {
-		getState: () => state,
-		updateValue: (name, newValue) => {
-			setState((prevState) => ({
-				...prevState,
-				[name]: { ...prevState[name], value: newValue },
-			}));
-		},
-		updateError: (name, newError) => {
-			setState((prevState) => ({
-				...prevState,
-				[name]: { ...prevState[name], error: newError },
-			}));
-		},
-		resetState() {
-			setState(initialState);
-		},
-	};
+	return { register, handleSubmit, errors, isValid, reset };
 };

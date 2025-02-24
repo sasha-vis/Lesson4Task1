@@ -1,7 +1,7 @@
 import styles from './inputBlock.module.css';
 import PropTypes from 'prop-types';
 
-export const InputBlock = ({ label, type, name, value, error, onChange, onBlur }) => {
+export const InputBlock = ({ label, type, name, register, error }) => {
 	return (
 		<div className={styles.inputBlock}>
 			<label htmlFor={name}>
@@ -13,9 +13,7 @@ export const InputBlock = ({ label, type, name, value, error, onChange, onBlur }
 				id={name}
 				name={name}
 				autoComplete="off"
-				value={value}
-				onChange={onChange}
-				onBlur={onBlur}
+				{...register(name)}
 			/>
 		</div>
 	);
@@ -25,8 +23,6 @@ InputBlock.propTypes = {
 	label: PropTypes.string,
 	type: PropTypes.string,
 	name: PropTypes.string,
-	value: PropTypes.string,
+	register: PropTypes.func,
 	error: PropTypes.string,
-	onChange: PropTypes.func,
-	onBlur: PropTypes.func,
 };

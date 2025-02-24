@@ -2,44 +2,36 @@ import styles from './App.module.css';
 import { InputBlock } from '../InputBlock/InputBlock';
 import PropTypes from 'prop-types';
 
-export const AppLayout = ({ sendForm, state, onChange, onBlur, submitButtonRef }) => {
-	const { email, password, passwordRpt } = state;
-
+export const AppLayout = ({ onSubmit, submitButtonRef, register, errors, isValid }) => {
 	return (
 		<div className={styles.app}>
-			<form className={styles.form} onSubmit={sendForm}>
+			<form className={styles.form} onSubmit={onSubmit}>
 				<InputBlock
 					label="Email"
 					type="text"
 					name="email"
-					value={email.value}
-					error={email.error}
-					onChange={onChange}
-					onBlur={onBlur}
+					error={errors['email']?.message}
+					register={register}
 				/>
 				<InputBlock
 					label="Password"
 					type="password"
 					name="password"
-					value={password.value}
-					error={password.error}
-					onChange={onChange}
-					onBlur={onBlur}
+					error={errors['password']?.message}
+					register={register}
 				/>
 				<InputBlock
 					label="Repeat password"
 					type="password"
 					name="passwordRpt"
-					value={passwordRpt.value}
-					error={passwordRpt.error}
-					onChange={onChange}
-					onBlur={onBlur}
+					error={errors['passwordRpt']?.message}
+					register={register}
 				/>
 				<button
 					className={styles.button}
 					type="submit"
 					ref={submitButtonRef}
-					disabled={!!email.error || !!password.error || !!passwordRpt.error}
+					disabled={!isValid}
 				>
 					Зарегистрироваться
 				</button>
@@ -49,9 +41,9 @@ export const AppLayout = ({ sendForm, state, onChange, onBlur, submitButtonRef }
 };
 
 AppLayout.propTypes = {
-	sendForm: PropTypes.func,
-	state: PropTypes.object,
-	onChange: PropTypes.func,
-	onBlur: PropTypes.func,
-	submitButtonRef: PropTypes.obj,
+	onSubmit: PropTypes.func,
+	submitButtonRef: PropTypes.object,
+	register: PropTypes.func,
+	errors: PropTypes.object,
+	isValid: PropTypes.bool,
 };
